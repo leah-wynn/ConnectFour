@@ -1,0 +1,51 @@
+<div class="container">
+  <div class="row">
+    <div class="grid-container">
+      <div (click)="takeATurn(0)" class="grid slot1">1</div>
+      <div (click)="takeATurn(1)" class="grid slot2">2</div>
+      <div (click)="takeATurn(2)" class="grid slot3">3</div>
+      <div (click)="takeATurn(3)" class="grid slot4">4</div>
+      <div (click)="takeATurn(4)" class="grid slot5">5</div>
+      <div (click)="takeATurn(5)" class="grid slot6">6</div>
+      <div (click)="takeATurn(6)" class="grid slot7">7</div>
+      <div (click)="takeATurn(0)" class="grid slot8">1</div>
+      <div (click)="takeATurn(1)" class="grid slot9">2</div>
+      <div (click)="takeATurn(2)" class="grid slot10">3</div>
+      <div (click)="takeATurn(3)" class="grid slot11">4</div>
+      <div (click)="takeATurn(4)" class="grid slot12">5</div>
+      <div (click)="takeATurn(5)" class="grid slot13">6</div>
+      <div (click)="takeATurn(6)" class="grid slot14">7</div>
+      <div (click)="takeATurn(0)" class="grid slot15">1</div>
+      <div (click)="takeATurn(1)" class="grid slot16">2</div>
+      <div (click)="takeATurn(2)" class="grid slot17">3</div>
+      <div (click)="takeATurn(3)" class="grid slot18">4</div>
+      <div (click)="takeATurn(4)" class="grid slot19">5</div>
+      <div (click)="takeATurn(5)" class="grid slot20">6</div>
+      <div (click)="takeATurn(6)" class="grid slot21">7</div>
+      <div (click)="takeATurn(0)" class="grid slot22">1</div>
+      <div (click)="takeATurn(1)" class="grid slot23">2</div>
+      <div (click)="takeATurn(2)" class="grid slot24">3</div>
+      <div (click)="takeATurn(3)" class="grid slot25">4</div>
+      <div (click)="takeATurn(4)" class="grid slot26">5</div>
+      <div (click)="takeATurn(5)" class="grid slot27">6</div>
+      <div (click)="takeATurn(6)" class="grid slot28">7</div>
+      <div (click)="takeATurn(0)" class="grid slot29">1</div>
+      <div (click)="takeATurn(1)" class="grid slot30">2</div>
+      <div (click)="takeATurn(2)" class="grid slot31">3</div>
+      <div (click)="takeATurn(3)" class="grid slot32">4</div>
+      <div (click)="takeATurn(4)" class="grid slot33">5</div>
+      <div (click)="takeATurn(5)" class="grid slot34">6</div>
+      <div (click)="takeATurn(6)" class="grid slot35">7</div>
+      <div (click)="takeATurn(0)" class="grid slot36">1</div>
+      <div (click)="takeATurn(1)" class="grid slot37">2</div>
+      <div (click)="takeATurn(2)" class="grid slot38">3</div>
+      <div (click)="takeATurn(3)" class="grid slot39">4</div>
+      <div (click)="takeATurn(4)" class="grid slot40">5</div>
+      <div (click)="takeATurn(5)" class="grid slot41">6</div>
+      <div (click)="takeATurn(6)" class="grid slot42">7</div>
+    </div>
+    <h1 *ngIf="isRedPlayersTurn()">Red Player's Turn</h1>
+    <h1 *ngIf="isBlackPlayersTurn()">Black Player's Turn</h1>
+    <h1 *ngIf="playerHasWon()">{{player}} Wins!!</h1>
+  </div>
+</div>
