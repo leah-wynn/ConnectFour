@@ -9,7 +9,6 @@ import {forEach} from '@angular/router/src/utils/collection';
 export class GameBoardComponent implements OnInit {
   board: Array<Array<string>>;
   turn: string;
-  player: string;
   _diskColor: string;
 
   constructor() {
@@ -68,14 +67,13 @@ export class GameBoardComponent implements OnInit {
   }
 
   playerHasWon(): boolean {
-    console.log(this.board);
     let diskCount = 0;
     const column = this.board[0];
-    for (let i = 0; i > column.length; i++) {
-      if (column[i] === column[i + 1] ) {
+    column.forEach((currentSlot, index) => {
+      if (currentSlot === column[index + 1]) {
         diskCount += 1;
       }
-    }
+    });
     return diskCount >= 4;
   }
 }
