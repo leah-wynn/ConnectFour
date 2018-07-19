@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GameBoardComponent } from './game-board.component';
+import { GameComponent } from './game.component';
 
-describe('GameBoardComponent', () => {
-  let component: GameBoardComponent;
-  let fixture: ComponentFixture<GameBoardComponent>;
+describe('GameComponent', () => {
+  let component: GameComponent;
+  let fixture: ComponentFixture<GameComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ GameBoardComponent ]
+      declarations: [ GameComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GameBoardComponent);
+    fixture = TestBed.createComponent(GameComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -24,7 +24,7 @@ describe('GameBoardComponent', () => {
   });
 
   it('should have a board', () => {
-    expect(component.board).toEqual([
+    expect(component._connectFour.board).toEqual([
       ['', '', '', '', '', ''],
       ['', '', '', '', '', ''],
       ['', '', '', '', '', ''],
@@ -35,37 +35,30 @@ describe('GameBoardComponent', () => {
       ]);
   });
   it('should drop in the first disk', () => {
-    component.dropDisk(0, 'red');
-    expect(component.board[0][0]).toEqual('red');
+    component.takeATurn(0);
+    expect(component._connectFour.board[0][0]).toEqual('red');
   });
   it('should drop in the second disk of the same column', () => {
-    component.dropDisk(0, 'red');
-    component.dropDisk(0, 'black');
-    expect(component.board[0][1]).toEqual('black');
+    component.takeATurn(0);
+    component.takeATurn(0);
+    expect(component._connectFour.board[0][1]).toEqual('black');
   });
   it('column is not available if column is full', () => {
-    component.dropDisk(0, 'red');
-    component.dropDisk(0, 'black');
-    component.dropDisk(0, 'red');
-    component.dropDisk(0, 'black');
-    component.dropDisk(0, 'red');
-    component.dropDisk(0, 'black');
+    component.takeATurn(0);
+    component.takeATurn(0);
+    component.takeATurn(0);
+    component.takeATurn(0);
+    component.takeATurn(0);
+    component.takeATurn(0);
     expect(component.isColumnAvailable(0)).toEqual(false);
   });
   it('column should be available if column is not full', () => {
-    component.dropDisk(0, 'red');
-    component.dropDisk(0, 'black');
-    component.dropDisk(0, 'red');
+    component.takeATurn(0);
+    component.takeATurn(0);
+    component.takeATurn(0);
     expect(component.isColumnAvailable(0)).toEqual(true);
   });
-  it('should be red players turn', () => {
-    expect(component.isBlackPlayersTurn()).toEqual(false);
-    expect(component.isRedPlayersTurn()).toEqual(true);
-  });
-  it('should be black players turn', () => {
-    component.takeATurn(0);
-    expect(component.isBlackPlayersTurn()).toEqual(true);
-  });
+
   it('should return error if column is not available', () => {
     component.takeATurn(0);
     component.takeATurn(0);
@@ -75,6 +68,7 @@ describe('GameBoardComponent', () => {
     component.takeATurn(0);
     expect(component.takeATurn(0)).toEqual('Column is full, Choose another');
   });
+
   it('should stay same players turn if column is not available', () => {
     component.takeATurn(0);
     component.takeATurn(0);
@@ -82,21 +76,40 @@ describe('GameBoardComponent', () => {
     component.takeATurn(0);
     component.takeATurn(0);
     component.takeATurn(0);
-    expect(component.isRedPlayersTurn()).toEqual(true);
+    expect(component._state.player).toEqual('red player');
     expect(component.takeATurn(0)).toEqual('Column is full, Choose another');
-    expect(component.isRedPlayersTurn()).toEqual(true);
+    expect(component._state.player).toEqual('red player');
     expect(component.takeATurn(1));
-    expect(component.isBlackPlayersTurn()).toEqual(true);
+    console.log(component._state.player);
+    expect(component._state.player).toEqual('black player');
   });
 
-  it('determines player has won if 4 disk are in a row horizontally', () => {
+  it('determines red player has won if 4 disk are in a row vertically', () => {
     component.takeATurn(0);
     component.takeATurn(1);
     component.takeATurn(0);
     component.takeATurn(1);
     component.takeATurn(0);
     component.takeATurn(1);
+    expect(component.takeATurn(0)).toEqual('red player has won');
+  });
+  it('determines red player has won if 4 disk are in a row horizontally', () => {
     component.takeATurn(0);
-    expect(component.playerHasWon()).toEqual(true);
+    component.takeATurn(6);
+    component.takeATurn(1);
+    component.takeATurn(1);
+    component.takeATurn(2);
+    component.takeATurn(1);
+    expect(component.takeATurn(3)).toEqual('red player has won');
+  });
+  it('determines black player has won if 4 disk are in a row horizontally', () => {
+    component.takeATurn(0);
+    component.takeATurn(1);
+    component.takeATurn(0);
+    component.takeATurn(2);
+    component.takeATurn(6);
+    component.takeATurn(3);
+    component.takeATurn(5);
+    expect(component.takeATurn(4)).toEqual('black player has won');
   });
 });
