@@ -13,6 +13,26 @@
   padding-top: 10px;
 }
 
+.red {
+  background-color: red;
+  color: #fff;
+  border-radius: 100%;
+  padding: 30px;
+  font-size: 150%;
+  height: 30%;
+  width: 30%;
+}
+
+.blue {
+  background-color: blue;
+  color: #fff;
+  border-radius: 100%;
+  padding: 30px;
+  font-size: 150%;
+  height: 30%;
+  width: 30%;
+}
+
 .grid {
   background-color: #444;
   color: #fff;
