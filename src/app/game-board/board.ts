@@ -18,10 +18,6 @@ export class ConnectFour {
       ['', '', '', '', '', '']  ];
   }
 
-  insertDisk() {
-
-  }
-
   isColumnAvailable(columnNumber: number) {
     return this.board[columnNumber][5] === '';
   }
@@ -58,10 +54,11 @@ export class ConnectFour {
     return diskCount;
   }
 
-  dropDisk(color: string) {
+  takeATurn(color: string) {
     this.column = this.board[this._game._columnNumber];
     this.findBottomSlot(this.column);
     this.column[this.bottomSlot] = color;
+    return !this.playerHasWon(this._game._columnNumber, this.bottomSlot);
   }
 
   playerHasWon(columnNumber: number, bottomSlot: number): boolean {

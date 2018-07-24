@@ -12,9 +12,13 @@ export class RedPlayerTurn extends IState {
     this._game = gameBoard;
     this._board = board;
   }
-  dropADisk() {
+  dropADisk(): string {
     this._game.setDiskColor();
-    this._board.dropDisk(this.diskColor);
-    this._game.setBlackPlayerState();
+    if (this._board.takeATurn(this.diskColor)) {
+      this._game.setBlackPlayerState();
+    } else {
+      this._game.setGameOverState();
+      return 'red player has won';
+    }
   }
 }

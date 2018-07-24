@@ -48,23 +48,12 @@ export class GameComponent implements OnInit {
     this._state = this._gameOverState;
   }
 
-  takeATurn(columnNumber: number): string {
+  takeATurn(columnNumber: number): any {
     this._columnNumber = columnNumber;
     if (!this._connectFour.isColumnAvailable(columnNumber)) {
       return 'Column is full, Choose another';
     }
-    this._state.dropADisk();
-    if (this._connectFour.playerHasWon(columnNumber, this._connectFour.bottomSlot)) {
-      let winner = '';
-      if (this._state === this._redPlayerState) {
-        winner = 'black player';
-      }
-      if (this._state === this._blackPlayerState) {
-        winner = 'red player';
-      }
-      this.setGameOverState();
-      return winner + ' has won';
-    }
+    return this._state.dropADisk();
   }
 
 

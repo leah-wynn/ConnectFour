@@ -10,6 +10,5 @@ export class GameOverState extends IState {
   }
   dropDisk(column: number) {}
   dropADisk() {}
-  findWinningPlayer() {}
 
 }
