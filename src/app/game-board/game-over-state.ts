@@ -1,14 +1,17 @@
 import {GameComponent} from './game.component';
 import {IState} from './state';
+import {ConnectFour} from './board';
 
 export class GameOverState extends IState {
-  diskColor: string;
-  bottomSlot: number;
-  player: string;
-  constructor(gameBoard: GameComponent) {
+  displayText = 'A Player Has Won';
+  private _game: GameComponent;
+  private _board: ConnectFour;
+  constructor(game: GameComponent, board: ConnectFour) {
     super();
+    this._game = game;
+    this._board = board;
   }
-  dropDisk(column: number) {}
-  dropADisk() {}
-
+  dropADisk() {
+    this.displayText = 'A Player Has Won, Reset Game Board to Start New Game';
+  }
 }

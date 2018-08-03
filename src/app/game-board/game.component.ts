@@ -19,7 +19,6 @@ export class GameComponent implements OnInit {
   _blackPlayerState: IState;
   _gameOverState: IState;
   _connectFour: ConnectFour;
-  _diskColor: string;
   _columnNumber: number;
 
 
@@ -27,15 +26,18 @@ export class GameComponent implements OnInit {
     this._connectFour = new ConnectFour(this);
     this._redPlayerState = new RedPlayerTurn(this, this._connectFour);
     this._blackPlayerState = new BlackPlayerTurn(this, this._connectFour);
-    this._gameOverState = new GameOverState(this);
+    this._gameOverState = new GameOverState(this, this._connectFour);
     this._state = this._redPlayerState;
   }
 
   ngOnInit() {
   }
-
-  setDiskColor() {
-   this._diskColor =  this._state.diskColor;
+  resetGame() {
+    this._connectFour = new ConnectFour(this);
+    this._redPlayerState = new RedPlayerTurn(this, this._connectFour);
+    this._blackPlayerState = new BlackPlayerTurn(this, this._connectFour);
+    this._gameOverState = new GameOverState(this, this._connectFour);
+    this._state = this._redPlayerState;
   }
 
   setRedPlayerState() {
@@ -50,10 +52,7 @@ export class GameComponent implements OnInit {
 
   takeATurn(columnNumber: number): any {
     this._columnNumber = columnNumber;
-    if (!this._connectFour.isColumnAvailable(columnNumber)) {
-      return 'Column is full, Choose another';
-    }
-    return this._state.dropADisk();
+    this._state.dropADisk();
   }
 
 

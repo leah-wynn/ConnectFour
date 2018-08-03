@@ -1,5 +1,4 @@
 export class IState {
-  diskColor: string;
-  player: string;
+  displayText: string;
   dropADisk() {}
 }

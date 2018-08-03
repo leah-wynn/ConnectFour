@@ -4,7 +4,7 @@ import {ConnectFour} from './board';
 
 export class RedPlayerTurn extends IState {
   diskColor = 'red';
-  player = 'red player';
+  displayText = 'Red Player\'s Turn';
   _game: GameComponent;
   _board: ConnectFour;
   constructor(gameBoard: GameComponent,  board: ConnectFour) {
@@ -12,13 +12,18 @@ export class RedPlayerTurn extends IState {
     this._game = gameBoard;
     this._board = board;
   }
-  dropADisk(): string {
-    this._game.setDiskColor();
-    if (this._board.takeATurn(this.diskColor)) {
-      this._game.setBlackPlayerState();
-    } else {
+  dropADisk() {
+    if (this._board.isColumnAvailable(this._game._columnNumber)) {
+      this._board.takeATurn(this.diskColor);
+      this.setNewState();
+    }
+  }
+
+  private setNewState() {
+    if (this._board.playerHasWon(this._game._columnNumber)) {
       this._game.setGameOverState();
-      return 'red player has won';
+    } else {
+      this._game.setBlackPlayerState();
     }
   }
 }

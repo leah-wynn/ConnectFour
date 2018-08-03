@@ -66,7 +66,8 @@ describe('GameComponent', () => {
     component.takeATurn(0);
     component.takeATurn(0);
     component.takeATurn(0);
-    expect(component.takeATurn(0)).toEqual('Column is full, Choose another');
+    component.takeATurn(0);
+    expect(component._state.displayText).toEqual('Red Player\'s Turn');
   });
 
   it('should stay same players turn if column is not available', () => {
@@ -76,33 +77,34 @@ describe('GameComponent', () => {
     component.takeATurn(0);
     component.takeATurn(0);
     component.takeATurn(0);
-    expect(component._state.player).toEqual('red player');
-    expect(component.takeATurn(0)).toEqual('Column is full, Choose another');
-    expect(component._state.player).toEqual('red player');
+    expect(component._state.displayText).toEqual('Red Player\'s Turn');
+    component.takeATurn(0);
+    expect(component._state.displayText).toEqual('Red Player\'s Turn');
     expect(component.takeATurn(1));
-    console.log(component._state.player);
-    expect(component._state.player).toEqual('black player');
+    expect(component._state.displayText).toEqual('Black Player\'s Turn');
   });
 
-  it('determines red player has won if 4 disk are in a row vertically', () => {
+  it('determines red displayText has won if 4 disk are in a row vertically', () => {
     component.takeATurn(0);
     component.takeATurn(1);
     component.takeATurn(0);
     component.takeATurn(1);
     component.takeATurn(0);
     component.takeATurn(1);
-    expect(component.takeATurn(0)).toEqual('red player has won');
+    component.takeATurn(0);
+    expect(component._state.displayText).toEqual('A Player Has Won');
   });
-  it('determines red player has won if 4 disk are in a row horizontally', () => {
+  it('determines red displayText has won if 4 disk are in a row horizontally', () => {
     component.takeATurn(0);
     component.takeATurn(6);
     component.takeATurn(1);
     component.takeATurn(1);
     component.takeATurn(2);
     component.takeATurn(1);
-    expect(component.takeATurn(3)).toEqual('red player has won');
+    component.takeATurn(3);
+    expect(component._state.displayText).toEqual('A Player Has Won');
   });
-  xit('determines black player has won if 4 disk are in a row horizontally', () => {
+  it('determines black displayText has won if 4 disk are in a row horizontally', () => {
     component.takeATurn(0);
     component.takeATurn(1);
     component.takeATurn(0);
@@ -110,6 +112,77 @@ describe('GameComponent', () => {
     component.takeATurn(6);
     component.takeATurn(3);
     component.takeATurn(5);
-    expect(component.takeATurn(4)).toEqual('black player has won');
+    component.takeATurn(4);
+    expect(component._state.displayText).toEqual('A Player Has Won');
+  });
+  it('determines red player has won if 4 disk are in a row horizontally', () => {
+    component.takeATurn(2);
+    component.takeATurn(0);
+    component.takeATurn(3);
+    component.takeATurn(1);
+    component.takeATurn(4);
+    component.takeATurn(3);
+    component.takeATurn(5);
+    expect(component._state.displayText).toEqual('A Player Has Won');
+  });
+  it('determines game over if second to last 4 disk are in a row horizontally', () => {
+    component.takeATurn(0);
+    component.takeATurn(2);
+    component.takeATurn(1);
+    component.takeATurn(3);
+    component.takeATurn(2);
+    component.takeATurn(4);
+    component.takeATurn(4);
+    component.takeATurn(5);
+    expect(component._state.displayText).toEqual('A Player Has Won');
+  });
+  it('determines game over if player has won the last 4 disk are in a row horizontally', () => {
+    component.takeATurn(3);
+    component.takeATurn(2);
+    component.takeATurn(4);
+    component.takeATurn(0);
+    component.takeATurn(5);
+    component.takeATurn(0);
+    component.takeATurn(6);
+    expect(component._state.displayText).toEqual('A Player Has Won');
+  });
+  it('should not continue to let player have a turn if the game is over', () => {
+    component.takeATurn(3);
+    component.takeATurn(2);
+    component.takeATurn(4);
+    component.takeATurn(0);
+    component.takeATurn(5);
+    component.takeATurn(0);
+    component.takeATurn(6);
+    component.takeATurn(6);
+    expect(component._state.displayText).toEqual('A Player Has Won, Reset Game Board to Start New Game');
+  });
+  it('should determine a player has won diagonally', () => {
+    component.takeATurn(0);
+    component.takeATurn(1);
+    component.takeATurn(1);
+    component.takeATurn(1);
+    component.takeATurn(2);
+    component.takeATurn(2);
+    component.takeATurn(2);
+    component.takeATurn(3);
+    component.takeATurn(3);
+    component.takeATurn(3);
+    component.takeATurn(3);
+    expect(component._state.displayText).toEqual('A Player Has Won');
+  });
+  xit('should determine a player has won diagonally', () => {
+    component.takeATurn(1);
+    component.takeATurn(2);
+    component.takeATurn(2);
+    component.takeATurn(2);
+    component.takeATurn(3);
+    component.takeATurn(3);
+    component.takeATurn(3);
+    component.takeATurn(4);
+    component.takeATurn(4);
+    component.takeATurn(4);
+    component.takeATurn(4);
+    expect(component._state.displayText).toEqual('A Player Has Won');
   });
 });

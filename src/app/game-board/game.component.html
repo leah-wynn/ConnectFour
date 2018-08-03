@@ -2,11 +2,15 @@
   <div class="row">
     <div class="grid-container">
       <div *ngFor="let column of _connectFour.board; let i = index">
-        <div *ngFor="let slot of column">
+        <div *ngFor="let slot of column.slice().reverse()">
           <div [ngClass]="{'red': slot === 'red', 'blue': slot === 'black', 'grid': slot === '' }" (click)="takeATurn(i)">{{i}}</div>
         </div>
       </div>
     </div>
-    <div>{{_state.player}}'s Turn</div>
+    <div>{{_state.displayText}}</div>
   </div>
+</div>
+
+<div>
+  <button (click)="resetGame()" >Reset Game</button>
 </div>

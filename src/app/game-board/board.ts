@@ -22,6 +22,12 @@ export class ConnectFour {
     return this.board[columnNumber][5] === '';
   }
 
+  takeATurn(color: string) {
+    this.column = this.board[this._game._columnNumber];
+    this.findBottomSlot(this.column);
+    this.column[this.bottomSlot] = color;
+  }
+
   findBottomSlot(column: string[]) {
     let bottomSlot;
     for (let i = 0; i < column.length; i++) {
@@ -33,40 +39,73 @@ export class ConnectFour {
     this.bottomSlot = bottomSlot;
   }
 
-  countVerticalDisks(column): number {
+  playerHasWon(columnNumber: number): boolean {
+    const column = this.board[columnNumber];
+    const fourVerticalDisks = this.countVerticalDisks(column);
+    const fourHorizontalDisks = this.countHorizontalDisks();
+    const fourDiagonalDisks = this.countDiagonalDisks();
+    return fourHorizontalDisks || fourVerticalDisks || fourDiagonalDisks;
+  }
+
+  countVerticalDisks(column): boolean {
     let diskCount = 1;
     column.forEach((currentSlot, index) => {
       if (currentSlot === column[index + 1] && currentSlot !== '') {
         diskCount += 1;
       }
     });
-    return diskCount;
+    return diskCount === 4;
   }
 
-  countHorizontalDisks(bottomSlot: number) {
-    let diskCount = 1;
-    for (let i = 0; i < 6; i++) {
-      const currentColumn = this.board[i];
-      if (currentColumn[bottomSlot] === this.board[i + 1][bottomSlot] && currentColumn[bottomSlot] !== '') {
-        diskCount += 1;
+  countHorizontalDisks() {
+      if (this.equalToNextDisk(0)
+        && this.equalToNextDisk(1)
+        && this.equalToNextDisk(2)) {
+        return true;
       }
+      else if (this.equalToNextDisk(1)
+        && this.equalToNextDisk(2)
+        && this.equalToNextDisk(3)) {
+        return true;
+      }
+      else if (this.equalToNextDisk(2)
+        && this.equalToNextDisk(3)
+        && this.equalToNextDisk(4)) {
+        return true;
+      }
+      else if (this.equalToNextDisk(3)
+        && this.equalToNextDisk(4)
+        && this.equalToNextDisk(5)) {
+        return true;
+      } else {
+        return false;
+      }
+  }
+
+  private bottomSlotIsEmpty(currentColumn) {
+    return currentColumn[this.bottomSlot] === '';
+  }
+
+  private equalToNextDisk(i: number) {
+    return this.board[i][this.bottomSlot] === this.board[i + 1][this.bottomSlot] && !this.bottomSlotIsEmpty(this.board[i]);
+  }
+  countDiagonalDisks() {
+    if (!this.slotIsEmpty(0, 0) &&
+        this.equalToDiagonalDisk(0, 0) &&
+        this.equalToDiagonalDisk(1, 1) &&
+        this.equalToDiagonalDisk(2, 2)
+        ) {
+      return true;
     }
-    return diskCount;
+    return false;
   }
 
-  takeATurn(color: string) {
-    this.column = this.board[this._game._columnNumber];
-    this.findBottomSlot(this.column);
-    this.column[this.bottomSlot] = color;
-    return !this.playerHasWon(this._game._columnNumber, this.bottomSlot);
+  private equalToDiagonalDisk(indexX: number, indexY: number ) {
+    return this.board[indexX][indexY] === this.board[indexX + 1][indexY + 1];
   }
 
-  playerHasWon(columnNumber: number, bottomSlot: number): boolean {
-    const column = this.board[columnNumber];
-    const verticalDiskCount = this.countVerticalDisks(column);
-
-    const horizontalDiskCount = this.countHorizontalDisks(bottomSlot);
-    return horizontalDiskCount === 4 || verticalDiskCount === 4;
+  private slotIsEmpty(indexX: number, indexY: number) {
+    return this.board[indexX][indexY] === '';
   }
 }
 
