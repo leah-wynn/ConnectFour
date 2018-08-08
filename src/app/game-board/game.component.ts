@@ -1,10 +1,11 @@
 
 import {ConnectFour} from './board';
 import {RedPlayerTurn} from './red-player-state';
-import {BlackPlayerTurn} from './black-player-state';
-import {GameOverState} from './game-over-state';
+import {BluePlayerTurn} from './blue-player-state';
 import {Component, OnInit} from '@angular/core';
 import {IState} from './state';
+import {BluePlayerWonState} from './blue-player-won-state';
+import {RedPlayerWonState} from './red-player-won-state';
 
 
 
@@ -16,43 +17,40 @@ import {IState} from './state';
 export class GameComponent implements OnInit {
   _state: IState;
   _redPlayerState: IState;
-  _blackPlayerState: IState;
-  _gameOverState: IState;
+  _bluePlayerState: IState;
   _connectFour: ConnectFour;
-  _columnNumber: number;
-
+  _bluePlayerWonState: BluePlayerWonState;
+  _redPlayerWonState: RedPlayerWonState;
 
   constructor() {
     this._connectFour = new ConnectFour(this);
     this._redPlayerState = new RedPlayerTurn(this, this._connectFour);
-    this._blackPlayerState = new BlackPlayerTurn(this, this._connectFour);
-    this._gameOverState = new GameOverState(this, this._connectFour);
+    this._bluePlayerState = new BluePlayerTurn(this, this._connectFour);
+    this._bluePlayerWonState = new BluePlayerWonState(this, this._connectFour);
+    this._redPlayerWonState = new RedPlayerWonState(this, this._connectFour);
     this._state = this._redPlayerState;
   }
 
   ngOnInit() {
   }
   resetGame() {
-    this._connectFour = new ConnectFour(this);
-    this._redPlayerState = new RedPlayerTurn(this, this._connectFour);
-    this._blackPlayerState = new BlackPlayerTurn(this, this._connectFour);
-    this._gameOverState = new GameOverState(this, this._connectFour);
-    this._state = this._redPlayerState;
+    this._state.resetGame();
   }
 
   setRedPlayerState() {
     this._state = this._redPlayerState;
   }
-  setBlackPlayerState() {
-    this._state = this._blackPlayerState;
+  setBluePlayerState() {
+    this._state = this._bluePlayerState;
   }
-  setGameOverState() {
-    this._state = this._gameOverState;
+  setBluePlayerWonState() {
+    this._state = this._bluePlayerWonState;
   }
-
+  setRedPlayerWonState() {
+    this._state = this._redPlayerWonState;
+  }
   takeATurn(columnNumber: number): any {
-    this._columnNumber = columnNumber;
-    this._state.dropADisk();
+    this._state.dropADisk(columnNumber);
   }
 
 

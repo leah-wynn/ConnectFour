@@ -1,4 +1,5 @@
-export class IState {
+export interface IState {
   displayText: string;
-  dropADisk() {}
+  dropADisk(columnNumber: number);
+  resetGame();
 }
